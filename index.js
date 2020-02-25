@@ -7,18 +7,13 @@ var isLive = false;
 let pararm = require('./param.js');
 
 let channel_stream = pararm.channel_stream;
-console.log("channel : " + channel_stream);
-
 let client_id = pararm.client_id;
-console.log("client id : " + client_id);
-
 let bot_id = pararm.bot_id;
-console.log("bot id : " + bot_id);
 
 
 // bot commands
 bot.on('ready', function () {
-    console.log("Je suis co !!!");
+    console.log("Bidoof connecté !!!");
 });
 
 bot.on('message', message => {
@@ -27,31 +22,42 @@ bot.on('message', message => {
     }
 });
 
+bot.on('message', message =>{
+    if (message.content.includes('.')) {
+        message.reply('tg');     
+    }
+});
+
+bot.on('message', message =>{
+    if (message.content.includes("bonjour")) {
+        message.author.sendMessage("Ferme ta gueule connard");
+    }
+})
+
 bot.on('guildMemberAdd', GuildMember => {
     GuildMember.addRole('681762016427638794', 'new user');
 });
 
 bot.on('message', message => {
-    if (message.content == 'stream') {
-        getStreamData();
+    if (message.content == "ok boomer") {
+        message.react('😡');
     }
-});
+})
 
 setInterval(() => {
     if (isLive == false) {
         getStreamData();
     }
-}, 30000);
+}, 60000);
 
 function getData(data) {
     if (data != undefined) {
         bot.channels.get(channel_stream).send('@everyone Blueton est en stream !!!! https://twitch.tv/blueton23');
         isLive = true;
-    }
-    else{
+    } else {
         isLive = false;
     }
-    console.log(data);
+    //console.log(data);
 }
 
 function getStreamData() {
