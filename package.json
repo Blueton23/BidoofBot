@@ -6,7 +6,8 @@
   "dependencies": {
     "discord.js": "^11.5.1",
     "jquery": "^3.4.1",
-    "uws": "^100.0.1"
+    "uws": "^100.0.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {},
   "scripts": {

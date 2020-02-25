@@ -1,43 +1,79 @@
 const DISCORD = require('discord.js');
-const channelName = "Blueton23";
 let bot = new DISCORD.Client();
+let channel = new DISCORD.Channel();
+let XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var isLive = false;
 
-bot.on('ready', function(){
+let pararm = require('./param.js');
+
+let channel_stream = pararm.channel_stream;
+console.log("channel : " + channel_stream);
+
+let client_id = pararm.client_id;
+console.log("client id : " + client_id);
+
+let bot_id = pararm.bot_id;
+console.log("bot id : " + bot_id);
+
+
+// bot commands
+bot.on('ready', function () {
     console.log("Je suis co !!!");
 });
 
-bot.on('message', message =>{
-    if (message.content == 'ping'){
+bot.on('message', message => {
+    if (message.content == 'ping') {
         message.reply('pong');
     }
 });
 
-bot.on('message', message =>{
-    if (message.content == 'stream'){
-        CheckOnline();
+bot.on('guildMemberAdd', GuildMember => {
+    GuildMember.addRole('681762016427638794', 'new user');
+});
+
+bot.on('message', message => {
+    if (message.content == 'stream') {
+        getStreamData();
     }
 });
 
-function marchepo(){
-    JQUERY.ajax({
-        url: "https://api.twitch.tv/kraken/streams/" + channelName,
-        dataType: 'json',
-        headers:{
-            'Client-ID': '9nlq7sldobuoz5mj4fhd7s6adizknl'
-        },
-        success: function(channel){
-            if (channel["stream"] == null){
-                console.log(channelName + " n'est pas en ligne");
+setInterval(() => {
+    if (isLive == false) {
+        getStreamData();
+    }
+}, 30000);
+
+function getData(data) {
+    if (data != undefined) {
+        bot.channels.get(channel_stream).send('@everyone Blueton est en stream !!!! https://twitch.tv/blueton23');
+        isLive = true;
+    }
+    else{
+        isLive = false;
+    }
+    console.log(data);
+}
+
+function getStreamData() {
+    const URL = "https://api.twitch.tv/helix/streams?user_login=blueton23";
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                let stream = JSON.parse(this.responseText);
+                let sData = stream.data[0];
+                getData(sData);
             } else {
-                console.log(channelName + " est en ligne");
+                console.error(this.status);
+                console.log(this.status);
             }
         }
-    });
+    };
+    xhttp.open("GET", URL, true);
+    xhttp.setRequestHeader('Client-ID', client_id);
+    xhttp.send();
 }
 
-async function CheckOnline() {
+// https://api.twitch.tv/helix/streams?user_login=blueton23
 
-
-}
-
-bot.login('NjgxMjAxOTY1MDkwNjAzMDQz.XlLCbw.8BSRuAXvfJFnqxRovRfxkNz9AoU');
+bot.login(bot_id);
