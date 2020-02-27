@@ -30,7 +30,7 @@ bot.on('message', message =>{
 
 bot.on('message', message =>{
     if (message.content.includes("bonjour")) {
-        message.author.sendMessage("Ferme ta gueule connard");
+        message.author.send("Ferme ta gueule connard");
     }
 })
 
