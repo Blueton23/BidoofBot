@@ -35,7 +35,7 @@ bot.on('message', message =>{
 })
 
 bot.on('guildMemberAdd', GuildMember => {
-    GuildMember.addRole('681762016427638794', 'new user');
+    GuildMember.addRole('648277156975214593', 'new user');
 });
 
 bot.on('message', message => {
