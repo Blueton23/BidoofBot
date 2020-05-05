@@ -29,7 +29,7 @@ bot.on('message', message =>{
 });
 
 bot.on('message', message =>{
-    if (message.content.includes("bonjour")) {
+    if (message.content.includes("bonjour") || message.content.includes("Bonjour")) {
         message.author.send("Ferme ta gueule connard");
     }
 })

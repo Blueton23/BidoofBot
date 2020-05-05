@@ -5,9 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "uws": "^100.0.1",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "youtube-audio-stream": "^0.3.5"
   },
   "devDependencies": {},
   "scripts": {
